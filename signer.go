@@ -2,17 +2,20 @@ package notary
 
 
 import (
-	"encoding/base32"
 	"encoding/base64"
 	"os"
 
-	"github.com/algorand/go-algorand/crypto"
+	// "github.com/algorand/go-algorand/crypto"
 	"github.com/algorand/go-algorand/data/basics"
-	"github.com/algorand/go-algorand/data/transactions"
-	"github.com/algorand/go-algorand/data/transactions/logic"
-	"github.com/algorand/go-algorand/protocol"
+	// "github.com/algorand/go-algorand/data/transactions"
+	// "github.com/algorand/go-algorand/data/transactions/logic"
+	// "github.com/algorand/go-algorand/protocol"
+
+	"crypto/ed25519"
 
 )
+
+const ProgramDataHashID string = "ProgData"
 
 func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatureb64string, retErr error) {
 	if signerAcct != "" {
@@ -20,13 +23,10 @@ func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatur
 		return
 	}
 
-	// Create signature secrets from the seed
-	var seed crypto.Seed
-	copy(seed[:], seedPhrase)
-	sec := crypto.GenerateSignatureSecrets(seed)
+	pK := NewKeyFromSeed([]byte(seedPhrase))
 
 
-	var progHash crypto.Digest
+
 	// Otherwise, the contract address is the logic hash
 	parsedAddr, err := basics.UnmarshalChecksumAddress(contractAddr)
 	if err != nil {
@@ -34,12 +34,9 @@ func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatur
 		return
 	}
 
-	// Copy parsed address as program hash
-	copy(progHash[:], parsedAddr[:])
-
 	/*
 		* Next, fetch the data to sign
-		*/
+	*/
 
 	dataToSign, err := base64.StdEncoding.DecodeString(datab64)
 	if err != nil {
@@ -47,14 +44,16 @@ func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatur
 		return
 	}
 
+	msg := append([]byte(ProgramDataHashID), append(parsedAddr[:], dataToSign...)...)
+
 	/*
 		* Sign the payload
-		*/
-
-	signature := sec.Sign(logic.Msg{
-		ProgramHash: progHash,
-		Data:        dataToSign,
-	})
+	*/
+	signature, err := pK.Sign(nil, msg, &ed25519.Options{Context: "notary_ed25519ctx"})
+	if err != nil {
+		retErr =err 
+		return err
+	}
 
 	// Always print signature to stdout
 	signatureb64 = base64.StdEncoding.EncodeToString(signature[:])
