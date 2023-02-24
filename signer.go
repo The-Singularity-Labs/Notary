@@ -2,20 +2,22 @@ package notary
 
 
 import (
+	"encoding/base32"
 	"encoding/base64"
 	"os"
-
+	"crypto/ed25519"
+	"crypto/sha512"
 	// "github.com/algorand/go-algorand/crypto"
-	"github.com/algorand/go-algorand/data/basics"
+	// "github.com/algorand/go-algorand/data/basics"
 	// "github.com/algorand/go-algorand/data/transactions"
 	// "github.com/algorand/go-algorand/data/transactions/logic"
 	// "github.com/algorand/go-algorand/protocol"
-
-	"crypto/ed25519"
-
 )
 
 const ProgramDataHashID string = "ProgData"
+const DigestSize = sha512.Size256
+
+type CryptoDigest [DigestSize]byte
 
 func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatureb64string, retErr error) {
 	if signerAcct != "" {
@@ -25,14 +27,23 @@ func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatur
 
 	pK := NewKeyFromSeed([]byte(seedPhrase))
 
-
-
-	// Otherwise, the contract address is the logic hash
-	parsedAddr, err := basics.UnmarshalChecksumAddress(contractAddr)
+	var short CryptoDigest
+	decoded, err := base32Encoder.DecodeString(address)
 	if err != nil {
 		retErr = err
 		return
 	}
+
+	copy(short[:], decoded[:len(short)])
+
+	// Otherwise, the contract address is the logic hash
+	// parsedAddr, err := basics.UnmarshalChecksumAddress(contractAddr)
+	// if err != nil {
+	// 	retErr = err
+	// 	return
+	// }
+
+	
 
 	/*
 		* Next, fetch the data to sign
@@ -44,7 +55,7 @@ func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatur
 		return
 	}
 
-	msg := append([]byte(ProgramDataHashID), append(parsedAddr[:], dataToSign...)...)
+	msg := append([]byte(ProgramDataHashID), append(short[:], dataToSign...)...)
 
 	/*
 		* Sign the payload
