@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"encoding/base64"
 
-    "github.com/the-singularity-labs/pkg/signer"
+    "github.com/the-singularity-labs/Notary/pkg/signer"
     
 	"github.com/hoenirvili/skapt"
 	"github.com/hoenirvili/skapt/argument"
