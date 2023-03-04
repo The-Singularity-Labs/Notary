@@ -33,8 +33,6 @@ Alpine.store('global_funcs', {
     }
 })
 
-Alpine.store('global_funcs').guark.hello_world()
-
 // init go functions
 export const wasmBrowserInstantiate = async (wasmModuleUrl, importObject) => {
     let response = undefined;
@@ -73,10 +71,10 @@ const addWasmFunctions = async () => {
     go.run(wasmModule.instance);
 
     // Set the add function into the wasm store
-    Alpine.store('global_funcs').setGoFunc("add", wasmModule.instance.exports.add)
+    Alpine.store('global_funcs').setGoFunc("algoSign", global.algoSign)
 
     // Test running the add function
-    console.log( Alpine.store('global_funcs').go.add(40, 2));
+
 };
 addWasmFunctions();
 
