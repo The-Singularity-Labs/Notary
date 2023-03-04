@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"encoding/base64"
 
-    "github.com/the-singularity-labs/Notary"
+    "github.com/the-singularity-labs/pkg/signer"
     
 	"github.com/hoenirvili/skapt"
 	"github.com/hoenirvili/skapt/argument"
@@ -24,7 +24,7 @@ func main() {
 			datab64 := ctx.String("datab64")
 
 			
-			msg, err := notary.SignMessage(signerAcct, seedPhrase, base64.StdEncoding.EncodeToString([]byte(datab64)))
+			msg, err := signer.SignMessage(signerAcct, seedPhrase, base64.StdEncoding.EncodeToString([]byte(datab64)))
 			if err != nil {
 				return err
 			}
