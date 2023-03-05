@@ -7,8 +7,6 @@ import (
 	"encoding/base64"
 	"crypto/ed25519"
 	"crypto/sha512"
-
-	"github.com/algorand/go-algorand-sdk/mnemonic"
 )
 
 const ProgramDataHashID string = "ProgData"
@@ -24,7 +22,7 @@ func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatur
 		return
 	}
 
-	pK, err := mnemonic.ToPrivateKey(seedPhrase)
+	pK, err := ToPrivateKey(seedPhrase)
 	if err != nil {
 		retErr = err 
 		return
@@ -73,3 +71,4 @@ func SignMessage(signerAcct string, seedPhrase string, datab64 string) (signatur
 	signatureb64 = base64.StdEncoding.EncodeToString(signature[:])
 	return
 }
+

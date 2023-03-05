@@ -1,5 +1,6 @@
 
 GO_ROOT := $(shell go env GOROOT)
+TINY_GO_ROOT := $(shell tinygo env TINYGOROOT)
 
 all: run
 
@@ -10,8 +11,9 @@ build: build-wasm build-linux build-windows build-osx
 
 build-wasm:
 	mkdir -p ui/src/assets/wasm
-	cp $(GO_ROOT)/misc/wasm/wasm_exec.js ui/src/wasm_exec.js
-	cd lib/wasm && GOOS=js GOARCH=wasm go build -o ../../ui/src/assets/wasm/golib.wasm ./main.go
+	cp $(TINY_GO_ROOT)/targets/wasm_exec.js ui/src/wasm_exec.js
+	cd lib/wasm && tinygo build -o ../../ui/src/assets/wasm/golib.wasm -target wasm -no-debug  ./main.go
+	cd ui/src/assets/wasm/ && wasm-opt -O golib.wasm -o golib.wasm
 
 app:
 	guark run

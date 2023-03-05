@@ -1,8 +1,8 @@
 import "./assets/css/ash.min.css";
 import Alpine from 'alpinejs';
-import MyPillComponent from './components/pill.js';
+import NotaryForm from './components/notary_form.js';
+import ConnectionCheck from './components/connection_check.js';
 import './wasm_exec'
-import g from "guark";
 
 import wasmURL from "url:./assets/wasm/golib.wasm";
 
@@ -10,27 +10,21 @@ const go = new global.Go();
 
 // register global stores
 Alpine.store('images', {
-    gifs: {
-        keanu: new URL('assets/images/keanu.gif?as=webp&width=480',import.meta.url),
-        morpheus: new URL('assets/images/morpheus.gif?as=webp&width=480',import.meta.url),
-    },
+    svgs: {
+      copy: new URL('assets/images/copy.svg',import.meta.url),
+      check: new URL('assets/images/check.svg',import.meta.url)
+    }
 })
-
-// Function declaration
-function hello_world() {
-    g.call("hello_world")
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-}
 
 Alpine.store('global_funcs', {
     go: {},
     setGoFunc(funcName, func) {
         this.go[funcName] =  func
-    },
-    guark: {
-        hello_world: hello_world
     }
+})
+
+Alpine.store('app', {
+  isOnline: null
 })
 
 // init go functions
@@ -72,9 +66,6 @@ const addWasmFunctions = async () => {
 
     // Set the add function into the wasm store
     Alpine.store('global_funcs').setGoFunc("algoSign", global.algoSign)
-
-    // Test running the add function
-
 };
 addWasmFunctions();
 
@@ -86,8 +77,12 @@ window.Alpine = Alpine;
 
 // Register Components
 document.addEventListener('alpine:init', () => {
-    Alpine.data('pill', MyPillComponent);
-})
+    Alpine.data('notaryForm', NotaryForm);
+});
+
+document.addEventListener('alpine:init', () => {
+  Alpine.data('connectionCheck', ConnectionCheck);
+});
 
 Alpine.start();
 
