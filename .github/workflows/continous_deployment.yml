@@ -46,7 +46,7 @@ jobs:
       - name: Optimize Wasm Build
         run: cd ui/src/assets/wasm/ && wasm-opt -Oz golib.wasm -o golib.wasm
       - name: Build Front End
-        run: cd ui && yarn run package
+        run: cd ui && yarn install && yarn run package
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
