@@ -41,8 +41,6 @@ jobs:
         run: sudo apt install binaryen
       - name: Get dependencies
         run: go mod download
-      - name: Get dependencies
-        run: go mod download
       - name: Build Wasm
         run: cd lib/wasm && tinygo build -o ../../ui/src/assets/wasm/golib.wasm -target wasm -no-debug  ./main.go
       - name: Optimize Wasm Build

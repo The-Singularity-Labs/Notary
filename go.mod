@@ -1,6 +1,6 @@
 module github.com/the-singularity-labs/create-guark-alpinejs-app
 
-go 1.18
+go 1.20
 
 require (
 	github.com/guark/guark v0.1.3
