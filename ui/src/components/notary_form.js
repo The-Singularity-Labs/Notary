@@ -54,7 +54,8 @@ const NotaryForm = () => ({
             <button 
                 :disabled="isSubmitable() === false" 
                 :class="signedMessage === '' ? init_button_class : submitted_button_class", 
-                @click="handleClick()" x-text="signedMessage === '' ? 'SIGN' : 'RESET'"
+                @click="handleClick()" 
+                x-text="signedMessage === '' ? 'SIGN' : 'RESET'"
                 type="button"
             >
             </button>
