@@ -13,3 +13,12 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# Guark Alpine App
+dist/
+guark.syso
+bundler.yaml
+ui/node_modules/
+ui/guark.lock
+lib/embed.go
+*Zone.Identifier*

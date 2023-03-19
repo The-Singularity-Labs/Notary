@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Notary</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <script src="https://polyfill.io/v3/polyfill.min.js?flags=gated&features=default,es5,es6,es7,matchMedia,IntersectionObserver,ResizeObserver,NodeList.prototype.forEach,HTMLTemplateElement,Element.prototype.closest,requestAnimationFrame,CustomEvent,URLSearchParams,queueMicrotask" nomodule></script>
+    <script type="module" src="main.js" />
+ </head>
+ <body  >
+    <div x-data="{onlineStatusCallback(isOnlineFlag){Alpine.store('app').isOnline = isOnlineFlag;}}">
+    <nav>
+        <div class="group --justify-start">
+            <div class="brand">Notary</div>
+        </div>
+
+        <div class="group --vertical-middle" x-data="{
+            loadingButtonClass: {'--family-sans': true, '--justify-self-end': true },
+            onlineButtonClass: {'-danger':  true,  '--family-sans': true, '--justify-self-end': true },
+            offlineButtonClass: {'-success':  true, '--family-sans': true, '--justify-self-end': true }
+        }">
+            <div x-data="connectionCheck" x-bind="bind"></div>
+        </div>
+    </nav>
+  <div class="container -fluid --align-center ">
+    <section>
+        <h2 class="--family-sans">Notary</h2>
+
+        <div class="column --flex-order-first --flex-wrap" x-data="{
+            init_button_class: {'button': true, '-right': true, '-warning': true, '-large': true},
+            submitted_button_class: {'-danger': true, '-large': true}
+        }">
+            <div x-data="notaryForm" x-bind="bind"></div>
+        </div>
+    </section>
+
+  </div>
+</div>
+ </body>
+</html>

@@ -2,11 +2,11 @@ module github.com/the-singularity-labs/Notary/cmd/cli
 
 go 1.20
 
-replace github.com/the-singularity-labs/Notary => ../..
+replace github.com/the-singularity-labs/Notary/pkg/signer => ../../pkg/signer
 
 require (
 	github.com/hoenirvili/skapt v0.0.0-20181026122304-fdaedd932adb
-	github.com/the-singularity-labs/Notary v0.0.0-00010101000000-000000000000
+	github.com/the-singularity-labs/Notary/pkg/signer v0.0.0-00010101000000-000000000000
 )
 
 require (

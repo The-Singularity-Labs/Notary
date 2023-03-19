@@ -6,5 +6,17 @@ A library, app, and cli for creating signed messages readable by the Algorand bl
 ## Quickstart
 
 ```
-go run  -a <CONTRACT_ADDRESS> -s "<MNEMONIC>" -d "<MESSAGE>"
+cd cmd/cli && go run main.go  -a <CONTRACT_ADDRESS> -s "<MNEMONIC>" -d "<MESSAGE>"
+```
+## Run dev app.
+
+Run dev app with vue hot reload:
+```bash
+make dev
+```
+
+## Build
+
+```bash
+make build
 ```
