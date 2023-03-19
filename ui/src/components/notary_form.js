@@ -52,11 +52,10 @@ const NotaryForm = () => ({
             <input  type="password" x-model="seed" placeholder="Notary Secret Key">
             <textarea  type="text" x-model="msg_to_sign" placeholder="Message"></textarea>
             <button 
-                :disabled="$store.app.isOnline === true || isSubmitable() === false" 
+                :disabled="isSubmitable() === false" 
                 :class="signedMessage === '' ? init_button_class : submitted_button_class", 
                 @click="handleClick()" x-text="signedMessage === '' ? 'SIGN' : 'RESET'"
-                type="button",
-                :data-tooltip = "!$store.app.isOnline  ? 'Click to sign message' : 'Must be offline'"
+                type="button"
             >
             </button>
 

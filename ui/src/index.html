@@ -12,24 +12,23 @@
     <div x-data="{onlineStatusCallback(isOnlineFlag){Alpine.store('app').isOnline = isOnlineFlag;}}">
     <nav>
         <div class="group --justify-start">
-            <a  aria-labelledby="singularity-button-label" href="https://github.com/orgs/The-Singularity-Labs/repositories" target="_blank" rel="noopener noreferrer">
-                <span id="singularity-button-label" hidden>Opens in new tab</span>
-                <div class="avatar -dark -medium">
-                    <img class="--self-start --justify-self-start" focusable="false" src = "assets/images/singularity.svg" alt="Go To Singularity" height="50" />
-                </div>
-            </a>     
+            <div class="brand">Notary</div>
         </div>
 
-        <div class="group --vertical-middle">
+        <div class="group --vertical-middle" x-data="{
+            loadingButtonClass: {'--family-sans': true, '--justify-self-end': true },
+            onlineButtonClass: {'-danger':  true,  '--family-sans': true, '--justify-self-end': true },
+            offlineButtonClass: {'-success':  true, '--family-sans': true, '--justify-self-end': true }
+        }">
             <div x-data="connectionCheck" x-bind="bind"></div>
         </div>
     </nav>
-  <div class="container -fluid --align-center">
+  <div class="container -fluid --align-center ">
     <section>
         <h2 class="--family-sans">Notary</h2>
 
         <div class="column --flex-order-first --flex-wrap" x-data="{
-            init_button_class: {'button': true, 'tooltip': true, '-right': true, '-warning': true, '-large': true},
+            init_button_class: {'button': true, '-right': true, '-warning': true, '-large': true},
             submitted_button_class: {'-danger': true, '-large': true}
         }">
             <div x-data="notaryForm" x-bind="bind"></div>

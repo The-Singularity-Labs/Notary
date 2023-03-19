@@ -13,7 +13,7 @@ build-wasm:
 	mkdir -p ui/src/assets/wasm
 	cp $(TINY_GO_ROOT)/targets/wasm_exec.js ui/src/wasm_exec.js
 	cd lib/wasm && tinygo build -o ../../ui/src/assets/wasm/golib.wasm -target wasm -no-debug  ./main.go
-	cd ui/src/assets/wasm/ && wasm-opt -O golib.wasm -o golib.wasm
+	cd ui/src/assets/wasm/ && wasm-opt -Oz golib.wasm -o golib.wasm
 
 app:
 	guark run

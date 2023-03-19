@@ -37,7 +37,7 @@ const ConnectionCheck = () => ({
         this.isOnline = await checkIsOnline();
         onlineStatusCallback(this.isOnline);
         if (this.isOnline) {
-            alert("You are online");
+            alert("You are online! Please consider disabling your internet connection while using Notary to reduce chance of secret key leakage");
         } else {
             alert("You are offline");
         }
@@ -49,7 +49,7 @@ const ConnectionCheck = () => ({
             x-init="handleClick(onlineStatusCallback)",
             @click="handleClick(onlineStatusCallback)" 
             x-text="isOnline === null ? 'LOADING...' : isOnline ? 'ONLINE' : 'OFFLINE'"
-            :class="{'-danger': isOnline === true, '-success': isOnline === false, '--family-sans': true, '--justify-self-end': true, '-outline': true}"
+            :class="isOnline === null ? loadingButtonClass : isOnline === true ? onlineButtonClass : offlineButtonClass",
             type="button"
             >
         </button
